@@ -1,8 +1,8 @@
 # Wander World
 
 ![Image 1](https://github.com/Asthasachan/Wander-World/blob/master/screenshots/main.png)  
-![Image 2](https://raw.githubusercontent.com/Asthasachan/Wander-World/master/screenshots/blog.png)  
-![Image 3](https://raw.githubusercontent.com/Asthasachan/Wander-World/master/screenshots/profile.png)  
+![Image 2](https://github.com/Asthasachan/Wander-World/blob/master/screenshots/blog.png)  
+![Image 3](https://github.com/Asthasachan/Wander-World/blob/master/screenshots/profile.png)  
 
 Wander World is a web site where users can share their travelling experiences which will help other users to choose their next holiday destination. To get started, simply sign up.
 
