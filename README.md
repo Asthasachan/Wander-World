@@ -1,6 +1,6 @@
-# YelpCamp
+# Wander World
 
-![Image 1](https://raw.githubusercontent.com/Asthasachan/Wander-World/master/screenshots/main.png)  
+![Image 1](https://github.com/Asthasachan/Wander-World/blob/master/screenshots/main.png)  
 ![Image 2](https://raw.githubusercontent.com/Asthasachan/Wander-World/master/screenshots/blog.png)  
 ![Image 3](https://raw.githubusercontent.com/Asthasachan/Wander-World/master/screenshots/profile.png)  
 
