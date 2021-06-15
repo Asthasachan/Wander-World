@@ -8,8 +8,6 @@ var campgroundSchema = new mongoose.Schema({
   imageId: String,
   description: String,
   location: String,
-  //lat: Number,
-  //lng: Number,
   phone: String,
   booking: {
     start: String,
