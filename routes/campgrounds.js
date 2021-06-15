@@ -2,14 +2,6 @@ var express = require("express");
 var router = express.Router();
 var Campground = require("../models/campground");
 var middleware = require("../middleware");
-//var NodeGeocoder = require("node-geocoder");
-/*var options = {
-  provider: "google",
-  httpAdapter: "https",
-  apiKey: process.env.GEO_CODE_API,
-  formatter: null
-};
-var geocoder = NodeGeocoder(options);*/
 var multer = require("multer");
 var storage = multer.diskStorage({
   filename: function(req, file, callback) {
@@ -177,15 +169,7 @@ router.post("/", middleware.isLoggedIn, upload.single("image"), function(
         id: req.user._id,
         username: req.user.username
       };
-    // geocoder.geocode(req.body.campground.location, function(err, data) {
-      //  if (err || !data.length) {
-       //   console.log(err);
-        //  req.flash("error", "Invalid address");
-         // return res.redirect("back");
-        //}
-       // req.body.campground.lat = data[0].latitude;
-       // req.body.campground.lng = data[0].longitude;
-        //req.body.campground.location = data[0].formattedAddress;
+
         Campground.create(req.body.campground, function(err, campground) {
           if (err) {
             req.flash("error", err.message);
@@ -255,14 +239,6 @@ router.put(
   upload.single("image"),
   middleware.checkCampgroundOwnership,
   function(req, res) {
-   // geocoder.geocode(req.body.campground.location, function(err, data) {
-    //  if (err || !data.length) {
-     //   req.flash("error", "Invalid address");
-      //  return res.redirect("back");
-     // }
-      //req.body.campground.lat = data[0].latitude;
-     // req.body.campground.lng = data[0].longitude;
-      //req.body.campground.location = data[0].formattedAddress;
       req.body.campground.booking = {
         start: req.body.campground.start,
         end: req.body.campground.end
