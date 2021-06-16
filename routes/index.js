@@ -2,10 +2,10 @@ var express = require("express");
 var router = express.Router();
 var passport = require("passport");
 var User = require("../models/user");
-var Campground = require("../models/campground");
+var Wanderworld = require("../models/wanderworld");
 var Comment = require("../models/comment");
 var middleware = require("../middleware");
-var multer = require("multer");
+var multer = require("multer"); 
 var storage = multer.diskStorage({
   filename: function(req, file, callback) {
     callback(null, Date.now() + file.originalname);
@@ -33,7 +33,7 @@ cloudinary.config({
 // root route
 router.get("/", function(req, res) {
   if (req.user) {
-    return res.redirect("/campgrounds");
+    return res.redirect("/wanderworlds");
   } else {
     res.render("landing");
   }
@@ -46,7 +46,7 @@ router.get("/about", function(req, res) {
 // show register form
 router.get("/register", function(req, res) {
   if (req.user) {
-    return res.redirect("/campgrounds");
+    return res.redirect("/wanderworlds");
   } else {
     res.render("register");
   }
@@ -70,7 +70,7 @@ router.post("/register", upload.single("image"), function(req, res) {
         });
       }
       passport.authenticate("local")(req, res, function() {
-        res.redirect("/campgrounds");
+        res.redirect("/wanderworlds");
       });
     });
   } else {
@@ -103,7 +103,7 @@ router.post("/register", upload.single("image"), function(req, res) {
             });
           }
           passport.authenticate("local")(req, res, function() {
-            res.redirect("/campgrounds");
+            res.redirect("/wanderworlds");
           });
         });
       }, {
@@ -116,7 +116,7 @@ router.post("/register", upload.single("image"), function(req, res) {
 // show login form
 router.get("/login", function(req, res) {
   if (req.user) {
-    return res.redirect("/campgrounds");
+    return res.redirect("/wanderworlds");
   } else {
     res.render("login");
   }
@@ -126,7 +126,7 @@ router.get("/login", function(req, res) {
 router.post(
   "/login",
   passport.authenticate("local", {
-    successRedirect: "/campgrounds",
+    successRedirect: "/wanderworlds",
     failureRedirect: "/login",
     failureFlash: true
   }),
@@ -146,10 +146,10 @@ router.get("/users/:user_id", function(req, res) {
       req.flash("error", "This user doesn't exist");
       return res.render("error");
     }
-    Campground.find()
+    Wanderworld .find()
       .where("author.id")
       .equals(foundUser._id)
-      .exec(function(err, campgrounds) {
+      .exec(function(err, wanderworlds) {
         if (err) {
           req.flash("error", "Something went wrong");
           res.render("error");
@@ -164,7 +164,7 @@ router.get("/users/:user_id", function(req, res) {
             }
             res.render("users/show", {
               user: foundUser,
-              campgrounds: campgrounds,
+              wanderworlds: wanderworlds,
               reviews: ratedCount
             });
           });

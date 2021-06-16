@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-var Campground = require("../models/campground");
+var Wanderworld = require("../models/wanderworld");
 var middleware = require("../middleware");
 var multer = require("multer");
 var storage = multer.diskStorage({
@@ -29,11 +29,11 @@ cloudinary.config({
 
 var Fuse = require("fuse.js");
 
-// INDEX - show all campgrounds
+// INDEX - show all wanderworlds
 router.get("/", function(req, res) {
   var noMatch = null;
   if (req.query.search) {
-    Campground.find({}, function(err, allCampgrounds) {
+    Wanderworld.find({}, function(err, allWanderworlds) {
       if (err) {
         console.log(err);
       } else {        
@@ -46,80 +46,80 @@ router.get("/", function(req, res) {
           minMatchCharLength: 2,
           keys: ["name", "location"]
         };
-        var fuse = new Fuse(allCampgrounds, options);
+        var fuse = new Fuse(allWanderworlds, options);
         var result = fuse.search(req.query.search);
         if (result.length < 1) {
           noMatch = req.query.search;
         }
-        res.render("campgrounds/index", {
-          campgrounds: result,
+        res.render("wanderworlds/index", {
+          wanderworlds: result,
           noMatch: noMatch
         });
       }
     });
   } else if (req.query.sortby) {
     if (req.query.sortby === "rateAvg") {
-      Campground.find({})
+      Wanderworld.find({})
         .sort({
           rateCount: -1,
           rateAvg: -1
         })
-        .exec(function(err, allCampgrounds) {
+        .exec(function(err, allWanderworlds) {
           if (err) {
             console.log(err);
           } else {
-            res.render("campgrounds/index", {
-              campgrounds: allCampgrounds,
+            res.render("wanderworlds/index", {
+              wanderworlds: allWanderworlds,
               currentUser: req.user,
               noMatch: noMatch
             });
           }
         });
     } else if (req.query.sortby === "rateCount") {
-      Campground.find({})
+      Wanderworld.find({})
         .sort({
           rateCount: -1
         })
-        .exec(function(err, allCampgrounds) {
+        .exec(function(err, allWanderworlds) {
           if (err) {
             console.log(err);
           } else {
-            res.render("campgrounds/index", {
-              campgrounds: allCampgrounds,
+            res.render("wanderworlds/index", {
+              wanderworlds: allWanderworlds,
               currentUser: req.user,
               noMatch: noMatch
             });
           }
         });
     } else if (req.query.sortby === "priceLow") {
-      Campground.find({})
+      Wanderworld.find({})
         .sort({
           price: 1,
           rateAvg: -1
         })
-        .exec(function(err, allCampgrounds) {
+        .exec(function(err, allWanderworlds) {
           if (err) {
             console.log(err);
           } else {
-            res.render("campgrounds/index", {
-              campgrounds: allCampgrounds,
+            res.render("wanderworlds/index", {
+              wanderworlds: allWanderworlds,
               currentUser: req.user,
               noMatch: noMatch
             });
           }
         });
     } else {
-      Campground.find({})
+      Wanderworld.find({})
         .sort({
           price: -1,
           rateAvg: -1
         })
-        .exec(function(err, allCampgrounds) {
+        .exec(function(err, allWanderworlds) {
           if (err) {
             console.log(err);
           } else {
-            res.render("campgrounds/index", {
-              campgrounds: allCampgrounds,
+            res.render("wanderworlds/index", {
+              wanderworlds: allWanderworlds,
               currentUser: req.user,
               noMatch: noMatch
             });
@@ -127,12 +127,12 @@ router.get("/", function(req, res) {
         });
     }
   } else {
-    Campground.find({}, function(err, allCampgrounds) {
+    Wanderworld.find({}, function(err, allWanderworlds) {
       if (err) {
         console.log(err);
       } else {
-        res.render("campgrounds/index", {
-          campgrounds: allCampgrounds,
+        res.render("wanderworlds/index", {
+          wanderworlds: allWanderworlds,
           currentUser: req.user,
           noMatch: noMatch
         });
@@ -141,7 +141,7 @@ router.get("/", function(req, res) {
   }
 });
 
-// CREATE - add new campground to db
+// CREATE - add new wanderworld to db
 router.post("/", middleware.isLoggedIn, upload.single("image"), function(
   req,
   res
@@ -158,24 +158,24 @@ router.post("/", middleware.isLoggedIn, upload.single("image"), function(
         req.flash("error", err.message);
         return res.render("error");
       }
-      req.body.campground.image = result.secure_url;
-      req.body.campground.imageId = result.public_id;
-      req.body.campground.booking = {
-        start: req.body.campground.start,
-        end: req.body.campground.end
+      req.body.wanderworld.image = result.secure_url;
+      req.body.wanderworld.imageId = result.public_id;
+      req.body.wanderworld.booking = {
+        start: req.body.wanderworld.start,
+        end: req.body.wanderworld.end
       };
-      req.body.campground.tags = req.body.campground.tags.split(",");
-      req.body.campground.author = {
+      req.body.wanderworld.tags = req.body.wanderworld.tags.split(",");
+      req.body.wanderworld.author = {
         id: req.user._id,
         username: req.user.username
       };
 
-        Campground.create(req.body.campground, function(err, campground) {
+      Wanderworld.create(req.body.wanderworld, function(err, wanderworld) {
           if (err) {
             req.flash("error", err.message);
             return res.render("error");
           }
-          res.redirect("/campgrounds");
+          res.redirect("/wanderworlds");
         });
     //  });
     },
@@ -185,76 +185,76 @@ router.post("/", middleware.isLoggedIn, upload.single("image"), function(
   );
 });
 
-// NEW - show form to create new campground
+// NEW - show form to create new wanderworld
 router.get("/new", middleware.isLoggedIn, function(req, res) {
-  res.render("campgrounds/new");
+  res.render("wanderworlds/new");
 });
 
-// SHOW - shows more information about one campground
+// SHOW - shows more information about one wanderworld
 router.get("/:id", function(req, res) {
-  Campground.findById(req.params.id)
+  Wanderworld.findById(req.params.id)
     .populate("comments")
-    .exec(function(err, foundCampground) {
-      if (err || !foundCampground) {
+    .exec(function(err, foundWanderworld) {
+      if (err || !foundWanderworld) {
         console.log(err);
-        req.flash("error", "Sorry, that campground does not exist!");
+        req.flash("error", "Sorry, that wanderworld does not exist!");
         return res.render("error");
       }
       var ratingsArray = [];
 
-      foundCampground.comments.forEach(function(rating) {
+      foundWanderworld.comments.forEach(function(rating) {
         ratingsArray.push(rating.rating);
       });
       if (ratingsArray.length === 0) {
-        foundCampground.rateAvg = 0;
+        foundWanderworld.rateAvg = 0;
       } else {
         var ratings = ratingsArray.reduce(function(total, rating) {
           return total + rating;
         });
-        foundCampground.rateAvg = ratings / foundCampground.comments.length;
-        foundCampground.rateCount = foundCampground.comments.length;
+        foundWanderworld.rateAvg = ratings / foundWanderworld.comments.length;
+        foundWanderworld.rateCount = foundWanderworld.comments.length;
       }
-      foundCampground.save();
-      res.render("campgrounds/show", {
-        campground: foundCampground
+      foundWanderworld.save();
+      res.render("wanderworlds/show", {
+        wanderworld: foundWanderworld
       });
     });
 });
 
-// EDIT CAMPGROUND ROUTE
+// EDIT wanderworld ROUTE
 router.get(
   "/:id/edit",
   middleware.isLoggedIn,
-  middleware.checkCampgroundOwnership,
+  middleware.checkWanderworldOwnership,
   function(req, res) {
-    res.render("campgrounds/edit", {
-      campground: req.campground
+    res.render("wanderworlds/edit", {
+      wanderworld: req.wanderworld
     });
   }
 );
 
-// UPDATE CAMPGROUND ROUTE
+// UPDATE wanderworld ROUTE
 router.put(
   "/:id",
   upload.single("image"),
-  middleware.checkCampgroundOwnership,
+  middleware.checkWanderworldOwnership,
   function(req, res) {
-      req.body.campground.booking = {
-        start: req.body.campground.start,
-        end: req.body.campground.end
+      req.body.wanderworld.booking = {
+        start: req.body.wanderworld.start,
+        end: req.body.wanderworld.end
       };
-      req.body.campground.tags = req.body.campground.tags.split(",");
-      Campground.findByIdAndUpdate(
+      req.body.wanderworld.tags = req.body.wanderworld.tags.split(",");
+      Wanderworld.findByIdAndUpdate(
         req.params.id,
-        req.body.campground,
-        async function(err, campground) {
+        req.body.wanderworld,
+        async function(err, wanderworld) {
           if (err) {
             req.flash("error", err.message);
             res.redirect("back");
           } else {
             if (req.file) {
               try {
-                await cloudinary.v2.uploader.destroy(campground.imageId);
+                await cloudinary.v2.uploader.destroy(wanderworld.imageId);
                 var result = await cloudinary.v2.uploader.upload(
                   req.file.path,
                   {
@@ -266,16 +266,16 @@ router.put(
                     moderation: "webpurify"
                   }
                 );
-                campground.imageId = result.public_id;
-                campground.image = result.secure_url;
+                wanderworld.imageId = result.public_id;
+                wanderworld.image = result.secure_url;
               } catch (err) {
                 req.flash("error", err.message);
                 return res.render("error");
               }
             }
-            campground.save();
-            req.flash("success", "Successfully updated your campground!");
-            res.redirect("/campgrounds/" + req.params.id);
+            wanderworld.save();
+            req.flash("success", "Successfully updated your wanderworld!");
+            res.redirect("/wanderworlds/" + req.params.id);
           }
         }
       );
@@ -283,17 +283,17 @@ router.put(
   }
 );
 
-// DESTROY CAMPGROUND ROUTE
-router.delete("/:id", middleware.checkCampgroundOwnership, function(req, res) {
-  Campground.findById(req.params.id, async function(err, campground) {
+// DESTROY wanderworld ROUTE
+router.delete("/:id", middleware.checkWanderworldOwnership, function(req, res) {
+  Wanderworld.findById(req.params.id, async function(err, wanderworld) {
     if (err) {
       req.flash("error", err.message);
       return res.redirect("back");
     }
     try {
-      await cloudinary.v2.uploader.destroy(campground.imageId);
-      campground.remove();
-      res.redirect("/campgrounds");
+      await cloudinary.v2.uploader.destroy(wanderworld.imageId);
+      wanderworld.remove();
+      res.redirect("/wanderworlds");
     } catch (err) {
       if (err) {
         req.flash("error", err.message);

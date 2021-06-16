@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 
 // SCHEME SETUP
-var campgroundSchema = new mongoose.Schema({
+var wanderworldSchema = new mongoose.Schema({
   name: String,
   price: Number,
   image: String,
@@ -26,7 +26,7 @@ var campgroundSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Comment"
-    }
+    }//Wanderworld   wanderworld
   ],
   rateAvg: Number,
   rateCount: Number,
@@ -38,4 +38,4 @@ var campgroundSchema = new mongoose.Schema({
   ]
 });
 
-module.exports = mongoose.model("Campground", campgroundSchema);
+module.exports = mongoose.model("Wanderworld", wanderworldSchema);

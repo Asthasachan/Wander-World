@@ -10,13 +10,13 @@
           <% } else { %>
             <img class="card-img-top" src="<%= user.image %>">
           <% } %>  
-            <div class="card-body">
+            <div class="card-body"> 
                 <h5 class="card-title text-capitalize"><%= user.fullName %></h5>
                 <h6 class="card-subtitle text-muted">                
-                  <% if (campgrounds.length === 1) { %>
-                    <%= campgrounds.length %>Travel Blog
+                  <% if (wanderworlds.length === 1) { %>
+                    <%= wanderworlds.length %>Travel Blog
                   <% } else { %>
-                    <%= campgrounds.length %>Travel Blogs
+                    <%= wanderworlds.length %>Travel Blogs
                   <% } %> 
                   <div><%= reviews.length %> Reviews</div>
                 </h6> 
@@ -36,10 +36,10 @@
                 <div class="card-body">
                   <h5 class="card-title text-capitalize"><%= user.fullName %></h5>
                   <h6 class="card-subtitle text-muted">                    
-                    <% if (campgrounds.length === 1) { %>
-                      <%= campgrounds.length %> Blog
+                    <% if (wanderworlds.length === 1) { %>
+                      <%= wanderworlds.length %> Blog
                     <% } else { %>
-                      <%= campgrounds.length %> Blogs
+                      <%= wanderworlds.length %> Blogs
                     <% } %>
                     <div>
                       <% if (reviews.length === 1) { %>
@@ -90,16 +90,16 @@
       <div class="col-12 col-md-6 col-lg-9">
         <div class="container text-center"><h1>Travel Blogs</h1></div>             
         <div class="row">          
-          <% campgrounds.forEach(function(campground) { %>
+          <% wanderworlds.forEach(function(wanderworld) { %>
             <div class="col-12 col-lg-6">
               <div class="card shadow-sm mt-3">
-                <a href="/campgrounds/<%= campground._id %>"><img id="campgroundCard" class="card-img-top" src="<%= campground.image %>"></a> 
+                <a href="/wanderworlds/<%= wanderworld._id %>"><img id="wanderworldCard" class="card-img-top" src="<%= wanderworld.image %>"></a> 
                 <div class="card-body">
                   <h5 class="card-title">
-                    <a href="/campgrounds/<%= campground._id %>" class="text-capitalize"><%= campground.name %></a>
-                    <% if (campground.price > 100) { %>
+                    <a href="/wanderworlds/<%= wanderworld._id %>" class="text-capitalize"><%= wanderworld.name %></a>
+                    <% if (wanderworld.price > 100) { %>
                       <small class="float-right text-muted">$$$</small>
-                    <% } else if (campgrounds.price > 50) { %>
+                    <% } else if (wanderworlds.price > 50) { %>
                       <small class="float-right text-muted">$$</small>
                     <% } else { %>
                       <small class="float-right text-muted">$</small>
@@ -107,20 +107,20 @@
                                       
                   </h5>              
                   <h6 class="card-subtitle">
-                    <% if(!campground.comments.length) { %>
+                    <% if(!wanderworld.comments.length) { %>
                       <span class="text-muted">No Reviews</span>
                     <% } else { %>
                       <% var stars = ['<i class="far fa-star text-danger"></i>', '<i class="far fa-star text-danger"></i>', '<i class="far fa-star text-danger"></i>', '<i class="far fa-star text-danger"></i>', '<i class="far fa-star text-danger"></i>'] %>
-                      <% for(var i = 0; i < Math.round(campground.rateAvg); i++) { %>
+                      <% for(var i = 0; i < Math.round(wanderworld.rateAvg); i++) { %>
                           <% stars[i] = '<i class="fas fa-star text-danger"></i>' %>
                       <% } %> 
                       <% for(var i = 0; i < stars.length; i++) { %>
                         <%- stars[i] %>
                       <% } %>
-                      <% if (campground.comments.length === 1) { %>
-                        <span class="text-muted"><%= campground.comments.length %> Review</span> 
+                      <% if (wanderworld.comments.length === 1) { %>
+                        <span class="text-muted"><%= wanderworld.comments.length %> Review</span> 
                       <% } else { %>
-                        <span class="text-muted"><%= campground.comments.length %> Reviews</span> 
+                        <span class="text-muted"><%= wanderworld.comments.length %> Reviews</span> 
                       <% } %>                
                     <% } %>   
                   </h6> 

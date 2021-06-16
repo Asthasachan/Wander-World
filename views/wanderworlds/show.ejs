@@ -1,12 +1,12 @@
 <% include ../partials/header %>
   <% include ../partials/errorMsg %>
-
-    <div id="campgroundsContainer" class="container mt-4">
+  
+    <div id="wanderworldsContainer" class="container mt-4">
       <div class="row">
         <div class="col-md-3">
           <div class="d-none d-md-block">
             <div class="lead text-center text-capitalize">
-              <%= campground.name %>
+              <%= wanderworld.name %>
             </div>
             <div class="card shadow-sm mt-2">
               <div class="card-header">
@@ -14,12 +14,12 @@
               </div>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item text-capitalize">
-                  <%= campground.booking.start %> -
-                    <%= campground.booking.end %>
+                  <%= wanderworld.booking.start %> -
+                    <%= wanderworld.booking.end %>
                 </li>
               </ul>
             </div>
-            <% if (campground.tags[0] === "") { %>
+            <% if (wanderworld.tags[0] === "") { %>
               <% ; %>
                 <% } else { %>
                   <div class="card shadow-sm mt-3">
@@ -27,9 +27,9 @@
                       <i class="far fa-smile"></i> Specialities
                     </div>
                     <ul class="list-group list-group-flush">
-                      <% for (var i = 0; i < campground.tags.length; i++) { %>
+                      <% for (var i = 0; i < wanderworld.tags.length; i++) { %>
                         <li class="list-group-item text-capitalize">
-                          <%= campground.tags[i] %>
+                          <%= wanderworld.tags[i] %>
                         </li>
                         <% } %>
                     </ul>
@@ -41,7 +41,7 @@
                       </div>
                       <ul class="list-group list-group-flush">
                         <li class="list-group-item">
-                          <%= campground.phone %>
+                          <%= wanderworld.phone %>
                         </li>
                       </ul>
                     </div>
@@ -49,7 +49,7 @@
                      <!--<div id="map"></div>--> 
                       <ul class="list-group list-group-flush">
                         <li class="list-group-item"><i class="fas fa-map-marker-alt"></i>
-                          <%= campground.location %>
+                          <%= wanderworld.location %>
                         </li>
                       </ul>
                     </div>
@@ -57,42 +57,42 @@
         </div>
         <div class="col-md-9">
           <div class="card shadow-sm">
-            <img class="card-img-top" src="<%= campground.image %>">
+            <img class="card-img-top" src="<%= wanderworld.image %>">
             <div class="card-body">
               <h5 class="card-title float-right">
-              $<%= campground.price %></h5>
+              $<%= wanderworld.price %></h5>
               <h5 class="card-title text-capitalize">
-              <%= campground.name %>
+              <%= wanderworld.name %>
               <div>
-                <% if(campground.comments.length === 0) { %>
+                <% if(wanderworld.comments.length === 0) { %>
                   <small class="text-muted">No Reviews</small>
                 <% } else { %>
                   <% var stars = ['<small><i class="far fa-star text-danger"></i></small>', '<small><i class="far fa-star text-danger"></i></small>', '<small><i class="far fa-star text-danger"></i></small>', '<small><i class="far fa-star text-danger"></i></small>', '<small><i class="far fa-star text-danger"></i></small>'] %>
-                  <% for(var i = 0; i < Math.round(campground.rateAvg); i++) { %>
+                  <% for(var i = 0; i < Math.round(wanderworld.rateAvg); i++) { %>
                       <% stars[i] = '<small><i class="fas fa-star text-danger"></i></small>' %>
                   <% } %>
                   <% for(var i = 0; i < stars.length; i++) { %>
                     <%- stars[i] %>
                   <% } %>
-                  <% if (campground.comments.length === 1) { %>
-                    <small class="text-muted"><%= campground.comments.length %> Review</small>
+                  <% if (wanderworld.comments.length === 1) { %>
+                    <small class="text-muted"><%= wanderworld.comments.length %> Review</small>
                   <% } else { %>
-                    <small class="text-muted"><%= campground.comments.length %> Reviews</small>
+                    <small class="text-muted"><%= wanderworld.comments.length %> Reviews</small>
                   <% } %>
                 <% } %>
               </div>
             </h5>
               <p class="card-text">
-                <%= campground.description %>
+                <%= wanderworld.description %>
                   <div class="d-block d-sm-none d-none d-sm-block d-md-none">
                     <hr>
                     <h5 class="card-title"><i class="fas fa-map-marker-alt"></i> Location</h5>
-                    <%= campground.location %>
+                    <%= wanderworld.location %>
                       <hr>
                       <h5 class="card-title text-capitalize"><i class="far fa-calendar-alt"></i> Holiday Season</h5>
-                      <%= campground.booking.start %> -
-                        <%= campground.booking.end %>
-                          <% if (campground.tags[0] === "") { %>
+                      <%= wanderworld.booking.start %> -
+                        <%= wanderworld.booking.end %>
+                          <% if (wanderworld.tags[0] === "") { %>
                             <% ; %>
                               <% } else { %>
                                 <hr>
@@ -100,30 +100,30 @@
                         <i class="far fa-smile"></i> Specialities
                       </h5>
 
-                                <% for (var i = 0; i < campground.tags.length; i++) { %>
-                                  <span class="badge badge-secondary text-capitalize"><%= campground.tags[i] %></span>
+                                <% for (var i = 0; i < wanderworld.tags.length; i++) { %>
+                                  <span class="badge badge-secondary text-capitalize"><%= wanderworld.tags[i] %></span>
                                   <% } %>
                                     <% } %>
                                       <hr>
                                       <h5 class="card-title"><i class="fas fa-phone"></i> Contact</h5>
-                                      <%= campground.phone %>
+                                      <%= wanderworld.phone %>
                   </div>
               </p>
               <hr>
               <p class="card-text text-muted">
                 <span>Submitted by
-                <a href="/users/<%= campground.author.id %>">
-                  <%= campground.author.username %></a> on
-                <%= moment(campground.createdAt).format('LL') %>
+                <a href="/users/<%= wanderworld.author.id %>">
+                  <%= wanderworld.author.username %></a> on
+                <%= moment(wanderworld.createdAt).format('LL') %>
               </span>
               </p>
-              <% if(currentUser && campground.author.id.equals(currentUser._id)) { %>
-                <form id="deleteForm" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST" class="float-right">
+              <% if(currentUser && wanderworld.author.id.equals(currentUser._id)) { %>
+                <form id="deleteForm" action="/wanderworlds/<%= wanderworld._id %>?_method=DELETE" method="POST" class="float-right">
                   <button class="delBtn btn text-dark btn-lg">
                   <i class="fas fa-trash-alt"></i>
                 </button>
                 </form>
-                <a href="/campgrounds/<%= campground._id %>/edit" class="btn text-dark btn-lg float-right">
+                <a href="/wanderworlds/<%= wanderworld._id %>/edit" class="btn text-dark btn-lg float-right">
                 <i class="fas fa-pencil-alt"></i>
               </a>
                 <% } %>
@@ -131,15 +131,15 @@
           </div>
           <div class="card shadow-sm mt-4" id="comments">
             <ul class="list-group list-group-flush">
-              <% if(currentUser && campground.author.id.equals(currentUser._id)) { %>
+              <% if(currentUser && wanderworld.author.id.equals(currentUser._id)) { %>
                 <li id="commentItem" class="list-group-item list-group-item-light">
                   Your Blog has
-                  <% if (campground.comments.length === 0) { %>
+                  <% if (wanderworld.comments.length === 0) { %>
                     no reviews.
-                    <% } else if (campground.comments.length === 1) { %>
+                    <% } else if (wanderworld.comments.length === 1) { %>
                       1 review
                       <% } else { %>
-                        <%= campground.comments.length %> reviews
+                        <%= wanderworld.comments.length %> reviews
                           <% } %>
                 </li>
                 <% } else { %>
@@ -149,7 +149,7 @@
                   <% } %>
                     <div class="collapse" id="collapseComment">
                       <div class="card-body">
-                        <form class="needs-validation" action="/campgrounds/<%= campground._id %>/comments" method="POST" novalidate>
+                        <form class="needs-validation" action="/wanderworlds/<%= wanderworld._id %>/comments" method="POST" novalidate>
                           <div class="form-group">
                             <textarea class="form-control" id="exampleFormControlTextarea1" name="comment[text]" rows="3" required></textarea>
                             <div class="invalid-feedback">
@@ -187,7 +187,7 @@
                         </form>
                       </div>
                     </div>
-                    <% campground.comments.forEach(function(comment){ %>
+                    <% wanderworld.comments.forEach(function(comment){ %>
                       <li class="list-group-item">
                         <p>
                           <i class="fas fa-user"></i>
@@ -213,7 +213,7 @@
                             <a class="btn text-dark" data-toggle="collapse" data-target="#editComment" aria-expanded="false" aria-controls="editComment">
                       <i class="fas fa-pencil-alt"></i>
                     </a>
-                            <form id="deleteForm2" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST" class="float-right">
+                            <form id="deleteForm2" action="/wanderworlds/<%= wanderworld._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST" class="float-right">
                               <button class="delBtn btn text-dark">
                         <i class="fas fa-trash-alt"></i>
                       </button>
@@ -221,7 +221,7 @@
                           </div>
                           <div class="collapse" id="editComment">
                             <div class="card-body">
-                              <form class="needs-validation" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=PUT" method="POST" novalidate>
+                              <form class="needs-validation" action="/wanderworlds/<%= wanderworld._id %>/comments/<%= comment._id %>?_method=PUT" method="POST" novalidate>
                                 <div class="form-group">
                                   <textarea class="form-control" id="exampleFormControlTextarea1" name="comment[text]" rows="3" required><%= comment.text %></textarea>
                                   <div class="invalid-feedback">

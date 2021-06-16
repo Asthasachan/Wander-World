@@ -2,8 +2,8 @@ require("dotenv").config();
 var express = require("express"),
   app = express(),
   bodyParser = require("body-parser"),
-  mongoose = require("mongoose"),
-  Campground = require("./models/campground"),
+  mongoose = require("mongoose"),  
+  Wanderworld = require("./models/wanderworld"),
   Comment = require("./models/comment"),
   passport = require("passport"),
   LocalStrategy = require("passport-local"),
@@ -13,11 +13,11 @@ var express = require("express"),
 
 // Requiring routes
 var commentRoutes = require("./routes/comments"),
-  campgroundRoutes = require("./routes/campgrounds"),
+wanderworldRoutes = require("./routes/wanderworlds"),
   indexRoutes = require("./routes/index");
   mongoose.Promise = global.Promise;
 
-  const databaseUri = process.env.MONGODB_URI || 'mongodb://localhost/yelp_camp';
+  const databaseUri = process.env.MONGODB_URI || 'mongodb://localhost/wanderworlddb';
   
   mongoose.connect(databaseUri, { useUnifiedTopology: true,  useNewUrlParser: true})
         .then(() => console.log(`Database connected`))
@@ -53,8 +53,8 @@ app.use(function(req, res, next) {
 });
 
 app.use("/", indexRoutes);
-app.use("/campgrounds", campgroundRoutes);
-app.use("/campgrounds/:id/comments", commentRoutes);
+app.use("/wanderworlds", wanderworldRoutes);
+app.use("/wanderworlds/:id/comments", commentRoutes);
 
 app.get("*", function(req, res) {
   res.render("error");

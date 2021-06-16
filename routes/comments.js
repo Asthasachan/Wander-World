@@ -1,23 +1,23 @@
 var express = require("express");
 var router = express.Router({ mergeParams: true });
-var Campground = require("../models/campground");
+var Wanderworld = require("../models/wanderworld");
 var Comment = require("../models/comment");
 var middleware = require("../middleware");
 
 // Comments new
 router.get("/new", middleware.isLoggedIn, function(req, res) {
-  Campground.findById(req.params.id, function(err, campground) {
+  Wanderworld.findById(req.params.id, function(err, wanderworld) {
     if (err) {
       console.log(err);
     } else {
-      res.render("comments/new", { campground: campground });
+      res.render("comments/new", { wanderworld: wanderworld });
     }
   });
 });
 
 // Comments create
 router.post("/", middleware.isLoggedIn, function(req, res) {
-  Campground.findById(req.params.id, function(err, found) {
+  Wanderworld.findById(req.params.id, function(err, found) {
     if (err) {
       console.log(err);
     }
@@ -28,14 +28,14 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
     if (ratedArray.includes(String(req.user._id))) {
       req.flash(
         "error",
-        "You've already reviewed this campgroud, please edit your review instead."
+        "You've already reviewed this wanderworld, please edit your review instead."
       );
-      res.redirect("/campgrounds/" + req.params.id);
+      res.redirect("/wanderworlds/" + req.params.id);
     } else {
-      Campground.findById(req.params.id, function(err, campground) {
+      Wanderworld.findById(req.params.id, function(err, wanderworld) {
         if (err) {
           console.log(err);
-          res.redirect("/campgrounds");
+          res.redirect("/wanderworlds");
         } else {
           var newComment = req.body.comment;
           Comment.create(newComment, function(err, comment) {
@@ -46,14 +46,14 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
               // add username and id to comment
               comment.author.id = req.user._id;
               comment.author.username = req.user.username;
-              campground.hasRated.push(req.user._id);
-              campground.rateCount = campground.comments.length;
+              wanderworld.hasRated.push(req.user._id);
+              wanderworld.rateCount = wanderworld.comments.length;
               // save comment
               comment.save();
-              campground.comments.push(comment);
-              campground.save();
+              wanderworld.comments.push(comment);
+              wanderworld.save();
               req.flash("success", "Successfully added review!");
-              res.redirect("/campgrounds/" + campground._id);
+              res.redirect("/wanderworlds/" + wanderworld._id);
             }
           });
         }
@@ -69,7 +69,7 @@ router.get(
   middleware.checkCommentOwnership,
   function(req, res) {
     res.render("comments/edit", {
-      campground_id: req.params.id,
+      wanderworld_id: req.params.id,
       comment: req.comment
     });
   }
@@ -88,7 +88,7 @@ router.put("/:comment_id", middleware.checkCommentOwnership, function(
       res.redirect("back");
     } else {
       req.flash("success", "Review updated!");
-      res.redirect("/campgrounds/" + req.params.id);
+      res.redirect("/wanderworlds/" + req.params.id);
     }
   });
 });
@@ -102,7 +102,7 @@ router.delete("/:comment_id", middleware.checkCommentOwnership, function(
     if (err) {
       res.redirect("back");
     } else {
-      Campground.findByIdAndUpdate(
+      Wanderworld.findByIdAndUpdate(
         req.params.id,
         { $pull: { comments: { $in: [req.params.comment_id] } } },
         function(err) {
@@ -111,7 +111,7 @@ router.delete("/:comment_id", middleware.checkCommentOwnership, function(
           }
         }
       );
-      Campground.findByIdAndUpdate(
+      Wanderworld.findByIdAndUpdate(
         req.params.id,
         { $pull: { hasRated: { $in: [req.user._id] } } },
         function(err) {
@@ -121,7 +121,7 @@ router.delete("/:comment_id", middleware.checkCommentOwnership, function(
         }
       );
       req.flash("success", "Review deleted!");
-      res.redirect("/campgrounds/" + req.params.id);
+      res.redirect("/wanderworlds/" + req.params.id);
     }
   });
 });
