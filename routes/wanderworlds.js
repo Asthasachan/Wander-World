@@ -142,10 +142,7 @@ router.get("/", function(req, res) {
 });
 
 // CREATE - add new wanderworld to db
-router.post("/", middleware.isLoggedIn, upload.single("image"), function(
-  req,
-  res
-) {
+router.post("/", middleware.isLoggedIn, upload.single("image"), function(req,res) {
   cloudinary.v2.uploader.upload(
     req.file.path,
     {
@@ -239,11 +236,12 @@ router.put(
   upload.single("image"),
   middleware.checkWanderworldOwnership,
   function(req, res) {
-      req.body.wanderworld.booking = {
-        start: req.body.wanderworld.start,
-        end: req.body.wanderworld.end
-      };
-      req.body.wanderworld.tags = req.body.wanderworld.tags.split(",");
+   
+    req.body.wanderworld.booking = {
+      start: req.body.wanderworld.start,
+      end: req.body.wanderworld.end
+    };
+    req.body.wanderworld.tags = req.body.wanderworld.tags.split(",");
       Wanderworld.findByIdAndUpdate(
         req.params.id,
         req.body.wanderworld,

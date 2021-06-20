@@ -12,15 +12,15 @@
             <p>
               <small class="text-muted">Fields marked * are required.</small>
             </p>
-            <form action="/ wanderworlds/<%=  wanderworld._id %>?_method=PUT" method="POST" class="needs-validation" enctype="multipart/form-data"
+            <form action="/wanderworlds/<%=  wanderworld._id %>?_method=PUT" method="POST" class="needs-validation" enctype="multipart/form-data"
               novalidate>
               <div class="form-group">
                 <label>Name*</label>
-                <input type="text" class="form-control" name=" wanderworld[name]" value="<%=  wanderworld.name %>">
+                <input type="text" class="form-control" name="wanderworld[name]" value="<%=  wanderworld.name %>">
               </div>
               <div class="form-group">
                 <label for="">Price/Night*</label>
-                <input type="number" class="form-control" name=" wanderworld[price]" value="<%=  wanderworld.price %>" min="0.01" step="0.01">
+                <input type="number" class="form-control" name="wanderworld[price]" value="<%=  wanderworld.price %>" min="0.01" step="0.01">
               </div>
               <div class="input-group mb-3">
                 <div class="custom-file">
@@ -30,42 +30,42 @@
               </div>
               <div class="form-group">
                 <label for="exampleFormControlTextarea1">Description*</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" name=" wanderworld[description]" rows="3" required><%=  wanderworld.description %></textarea>
+                <textarea class="form-control" id="exampleFormControlTextarea1" name="wanderworld[description]" rows="3" required><%=  wanderworld.description %></textarea>
               </div>
               <div class="form-group">
                 <label for="location">Location*</label>
-                <input type="text" class="form-control" name=" wanderworld[location]" value="<%=  wanderworld.location %>" id="location" required>
+                <input type="text" class="form-control" name="wanderworld[location]" value="<%=  wanderworld.location %>" id="location" required>
                 <div class="invalid-feedback">
                   Please provide a valid location
                 </div>
               </div>
               <div class="form-group">
                 <label for="">Phone Number*</label>
-                <input type="text" class="form-control" name=" wanderworld[phone]" value="<%=  wanderworld.phone %>" required>
+                <input type="text" class="form-control" name="wanderworld[phone]" value="<%=  wanderworld.phone %>" required>
                 <div class="invalid-feedback">
                   Please provide a phone number.
                 </div>
               </div>
               <div class="form-row">
                 <div class="form-group col-md-6">
-                  <label for="">Booking Window (Start)*</label>
-                  <input type="text" class="form-control" name=" wanderworld[start]" value="<%=  wanderworld.booking.start %>" required>
+                  <label for="">Holiday Season *</label>
+                  <input type="text" class="form-control" name="wanderworld[start]" value="<%= wanderworld.booking.start %>" required>
                   <div class="invalid-feedback">
-                    Please provide a booking window.
+                    Please provide a Holiday Season*.
                   </div>
                 </div>
                 <div class="form-group col-md-6">
-                  <label for="">Booking Window (End)*</label>
-                  <input type="text" class="form-control" name=" wanderworld[end]" value="<%=  wanderworld.booking.end %>" required>
+                  <label for="">Holiday Season (end)*</label>
+                  <input type="text" class="form-control" name="wanderworld[end]" value="<%= wanderworld.booking.end %>" required>
                 </div>
               </div>
               <div class="form-group">
-                <label for="">Amenities separated by commas (boating,fishing,wifi)</label>
-                <input type="text" class="form-control" name=" wanderworld[tags]" value="<%=  wanderworld.tags %>">
+                <label for="">Specialities separated by commas (boating,fishing,wifi)</label>
+                <input type="text" class="form-control" name="wanderworld[tags]" value="<%=  wanderworld.tags %>">
               </div>
               <button type="submit" class="btn btn-danger btn-block">Submit</button>
             </form>
-            <a class="btn btn-link btn-block" href="/ wanderworlds/<%=  wanderworld._id %>">Go Back</a>
+            <a class="btn btn-link btn-block" href="/wanderworlds/<%=  wanderworld._id %>">Go Back</a>
           </div>
 
         </div>
